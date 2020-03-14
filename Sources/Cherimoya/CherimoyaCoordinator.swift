@@ -9,19 +9,17 @@ import Foundation
 import UIKit
 
 
-public extension UIStoryboard {
-    class var main: UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: Bundle.main)
-    }
-}
-
 
 public protocol Storyboarded {}
+
 public extension Storyboarded where Self: UIViewController {
-    static func instanciate() -> Self? {
-        guard let identifier = NSStringFromClass(self).components(separatedBy: ".").first else { return nil }
-        return UIStoryboard.main.instantiateViewController(withIdentifier: identifier) as? Self
+    
+    static func instanciate(from storyboard: UIStoryboard) -> Self? {
+        guard let identifier = NSStringFromClass(self).components(separatedBy: ".").last else { return nil }
+        return storyboard.instantiateViewController(withIdentifier: identifier) as? Self
     }
+    
+    
 }
 
 
